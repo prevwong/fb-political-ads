@@ -42,6 +42,8 @@ export const Sentiment = () => {
 
     
     const highlightRegion = function(d) {
+      if ( !d.selectable ) return;
+
       svg.selectAll("rect").style('opacity', function(d1) {
         return d1 == d ? 1: 0.2;
       })
@@ -136,7 +138,9 @@ export const Sentiment = () => {
       })
       .enter()
       .append('rect')
+      .style('transition', '0.1s ease-in')
       .attr('y', function (d) {
+        d.selectable = true;
         return y(d.data.entity)
       })
       .attr('x', function (d, i) {
@@ -252,8 +256,14 @@ export const Sentiment = () => {
 
                     svg.selectAll('rect').each(function (d) {
                       const category = d.key;
-                      if ( value && category != value) this.style.fill = '#eee'
-                      else this.style.fill = colorRef.current(category)
+                      if ( value && category != value) {
+                        this.style.fill = '#eee';
+                        d.selectable = false;
+                      }
+                      else {
+                        this.style.fill = colorRef.current(category);
+                        d.selectable = true;
+                      }
                     })
                   }}
                 />

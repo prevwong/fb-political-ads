@@ -159,3 +159,20 @@ table thead th {
 .el-dialog__title {
   font-size: 24px;
 }
+
+.visibility {
+  /* position: relative; */
+  transition: 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+  opacity:0;
+  transform: translateY(100px);
+}
+
+.visibility.visible {
+  opacity:1;
+  transform: translateY(0);
+}
+
+.visibility.wasVisible {
+  opacity:1!important;
+  transform:none!important;
+}

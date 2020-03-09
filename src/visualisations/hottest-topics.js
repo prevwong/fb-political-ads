@@ -42,6 +42,7 @@ export const HottestTopics = () => {
 
 
     const highlightRegion = function(d) {
+      if ( !d.selectable ) return;
       svg.selectAll("path").style('opacity', function(d1) {
         return d1.properties.name == d.properties.name ? 1 : 0.2;
       })
@@ -155,6 +156,7 @@ export const HottestTopics = () => {
       .style('cursor', 'pointer')
       .style('transition', '0.1s ease-in')
       .style('fill', function (d) {
+        d.selectable = true;
         var value = d.properties.category && d.properties.category[0]
         if (value) {
           return color(value)
@@ -211,8 +213,13 @@ export const HottestTopics = () => {
                     svg.selectAll('svg path').each(function (d) {
                       const category =
                         d.properties.category && d.properties.category[0]
-                      if (value && category != value) this.style.fill = '#eee'
-                      else this.style.fill = colorRef.current(category)
+                      if (value && category != value) {
+                        this.style.fill = '#eee';
+                        d.selectable=false;
+                      } else {
+                        d.selectable=true;
+                        this.style.fill = colorRef.current(category);
+                      }
                     })
                   }}
                 />
