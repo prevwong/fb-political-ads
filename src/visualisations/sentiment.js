@@ -2,6 +2,7 @@ import React, { useRef, useState, useCallback, useEffect } from 'react'
 import { Layout, Dialog, Tabs, Table, Tag } from 'element-react'
 import * as d3 from 'd3'
 import { Legends } from '../components/Legends'
+import { capitalise } from '../utils'
 
 
 // console.log(fc.chartCartesian)
@@ -42,11 +43,9 @@ export const Sentiment = () => {
     
     const highlightRegion = function(d) {
       svg.selectAll("rect").style('opacity', function(d1) {
-        // console.log(d1)
         return d1 == d ? 1: 0.2;
       })
 
-      // this.style.opacity(1);
   
       div
         .transition()
@@ -55,8 +54,7 @@ export const Sentiment = () => {
       div
         .html(
           `
-          <div>${d.key[0].toUpperCase() +
-            d.key.slice(1, d.key.length)}: ${d[1] - d[0]}</div>
+          <div>${capitalise(d.key)}: ${d[1] - d[0]}</div>
         `
         )
         .style('left', d3.event.pageX + 'px')
@@ -103,20 +101,14 @@ export const Sentiment = () => {
     )
 
     x.domain([0, 100]).nice()
-    // z.domain(keys.slice(1));
 
-    const series = d3.stack().keys(keys.slice(1))(csv)
-
-    // const color = d3
-    // .scaleOrdinal()
-    // .domain(keys.slice(1))
-    // .range(d3.schemeCategory10)
+    const series = d3.stack().keys(keys.slice(1))(csv);
 
     var color = d3
       .scaleOrdinal()
       .range(['#62bedc', '#6b8ae4', '#1fa888', '#fec958']);
 
-    setLegends(keys.slice(1).map(name => ({ name, color: color(name) })))
+    setLegends(keys.slice(1).map(name => ({ name: capitalise(name), color: color(name) })))
     colorRef.current = color;
 
     var div = d3
@@ -168,7 +160,6 @@ export const Sentiment = () => {
           keys: keys.slice(1),
         };
 
-        console.log(obj)
         setDialog(obj)
       })
 
@@ -187,7 +178,6 @@ export const Sentiment = () => {
     init()
   }, [])
 
-  console.log(dialog && dialog.selected.key)
   return (
     <div style={{padding: "20px 0"}}>
        <Dialog
@@ -224,7 +214,7 @@ export const Sentiment = () => {
                     }
                     return (
                       <Tabs.Pane 
-                       label={<>{key} <Tag style={{background: colorRef.current(key)}}>{dialog.selected.data[key]}</Tag></>}
+                       label={<>{capitalise(key)} <Tag style={{background: colorRef.current(key)}}>{dialog.selected.data[key]}</Tag></>}
                        name={key} key={key}>
                         <Table
                          height={250}
@@ -256,12 +246,13 @@ export const Sentiment = () => {
               {legends ? (
                 <Legends
                   data={legends}
-                  onChange={value => {
+                  onChange={(value) => {
+                    value = value ? value.toLowerCase() : value;
                     const svg = svgD3.current
 
                     svg.selectAll('rect').each(function (d) {
                       const category = d.key;
-                      if (value && category != value) this.style.fill = '#eee'
+                      if ( value && category != value) this.style.fill = '#eee'
                       else this.style.fill = colorRef.current(category)
                     })
                   }}
