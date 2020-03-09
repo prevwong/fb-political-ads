@@ -151,3 +151,11 @@ div.tooltip {
 table thead th {
   font-size:12px;
 }
+
+.el-dialog__header {
+  padding: 38px 20px 0;
+}
+
+.el-dialog__title {
+  font-size: 24px;
+}

@@ -1,5 +1,5 @@
 import React, { useRef, useState, useCallback, useEffect } from 'react'
-import { Layout } from 'element-react'
+import { Layout, Dialog, Tabs, Table, Tag } from 'element-react'
 import * as d3 from 'd3'
 import { Legends } from '../components/Legends'
 
@@ -9,6 +9,7 @@ export const Sentiment = () => {
   const svgRef = useRef()
   const svgD3 = useRef();
   const colorRef = useRef()
+  const [dialog, setDialog] = useState();
   const [legends, setLegends] = useState();
   const [selected, setSelected] = useState();
   const selectedRef = useRef();
@@ -94,6 +95,7 @@ export const Sentiment = () => {
       return accum
     }, [])
 
+    console.log(csv);
     y.domain(
       csv.map(function (d) {
         return d.entity
@@ -114,7 +116,7 @@ export const Sentiment = () => {
       .scaleOrdinal()
       .range(['#62bedc', '#6b8ae4', '#1fa888', '#fec958']);
 
-    setLegends(keys.splice(1).map(name => ({ name, color: color(name) })))
+    setLegends(keys.slice(1).map(name => ({ name, color: color(name) })))
     colorRef.current = color;
 
     var div = d3
@@ -152,11 +154,22 @@ export const Sentiment = () => {
         return x(d[1]) - x(d[0])
       })
       .attr('height', y.bandwidth())
+      .style("cursor", "pointer")
       .on('mouseover', function (d) {
         highlightRegion(d);
       })
       .on('mouseout', function (d) {
         unhighlightRegion();
+      })
+      .on('mousedown', d => {
+        const obj = {
+          selected: d,
+          data: json[d.data.entity],
+          keys: keys.slice(1),
+        };
+
+        console.log(obj)
+        setDialog(obj)
       })
 
     g.append('g')
@@ -174,8 +187,60 @@ export const Sentiment = () => {
     init()
   }, [])
 
+  console.log(dialog && dialog.selected.key)
   return (
     <div style={{padding: "20px 0"}}>
+       <Dialog
+        title={dialog && dialog.selected.data.entity}
+        visible={!!dialog}
+        onCancel={ () => setDialog(null) }
+      >
+        <Dialog.Body>
+          {
+            dialog ? (
+              <Tabs activeName={dialog.selected.key} value={dialog.selected.key}>
+                {
+                  dialog.keys.map(key => {
+                    const table = {
+                      columns: [
+                        {
+                          label: "Message",
+                          prop: "message",
+                        },
+                        {
+                          label: "Impressions",
+                          prop: "impressions",
+                          width: 120
+                        }
+                      ],
+                      data: dialog.data.filter(item => item.conclusion == key).reduce((accum, item) => {
+                          accum.push({
+                            message: item.text,
+                            impressions: item.impressions
+                          })
+                          return accum;
+                        }, [])
+                      
+                    }
+                    return (
+                      <Tabs.Pane 
+                       label={<>{key} <Tag style={{background: colorRef.current(key)}}>{dialog.selected.data[key]}</Tag></>}
+                       name={key} key={key}>
+                        <Table
+                         height={250}
+                          style={{width: '100%'}}
+                          columns={table.columns}
+                          data={table.data}
+                        />
+                      </Tabs.Pane>
+                    )
+                  })
+                }
+              </Tabs>
+            ) : null
+          }
+        </Dialog.Body>
+      </Dialog>
       <Layout.Row>
         <Layout.Col span='20'>
           <svg
