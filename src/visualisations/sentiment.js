@@ -13,6 +13,7 @@ export const Sentiment = () => {
   const [dialog, setDialog] = useState();
   const [legends, setLegends] = useState();
   const [selected, setSelected] = useState();
+  
   const selectedRef = useRef();
   selectedRef.current = selected;
 
