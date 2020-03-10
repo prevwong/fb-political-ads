@@ -1,6 +1,6 @@
 # An Analysis of Political Advertisements on Facebook
 
-As part of our Data Visualisation (TDS3401), we've decided to analyze the [Political Advertisements from Facebook](https://www.propublica.org/datastore/dataset/political-advertisements-from-facebook) dataset to come up with interesting visualisations.
+As part of our Data Visualisation (TDS3401) course project, we've decided to analyze the [Political Advertisements from Facebook](https://www.propublica.org/datastore/dataset/political-advertisements-from-facebook) dataset to come up with interesting and valuable visualisations.
 
 ## Preprocessing
 Since the original dataset is huge (~3 GB), we've performed preprocessing to derive suitable datasets beforehand for each visualisation. These preprocessed datasets can be found in `public/datasets/`
