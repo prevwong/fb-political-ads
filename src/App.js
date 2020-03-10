@@ -4,6 +4,7 @@ import { Container } from './components/Container'
 import { Graph } from './components/Graph'
 import { HottestTopics } from './visualisations/hottest-topics'
 import { Sentiment } from './visualisations/sentiment'
+import { Bubbles} from './visualisations/bubbles'
 
 function App () {
   return (
@@ -11,7 +12,7 @@ function App () {
       <Container
         preface='An analysis of'
         title='Facebook Political Advertisements'
-        subtitle='by Prev Wong &amp; Danny Tay'
+        subtitle='by Prev Wong &amp; Danny Tey'
       >
         <p className='paragraph'>
           Advertisement is an extremely powerful and therefore, potentially
@@ -26,6 +27,15 @@ function App () {
           advertisement shown to us.{' '}
         </p>
       </Container>
+      <Container
+        preface="What is the"
+        title="Big picture of Facebook political ads?"
+      >
+        <p className='paragraph'>
+          Let's have a high level overview of the ads. Who are the most frequently mentioned entities, targets, and advertisers?
+        </p>
+      </Container>
+      <Graph visualisation={Bubbles}></Graph>
       <Container
         preface='How are the top'
         title='Political entities represented by advertisers?'
@@ -47,6 +57,7 @@ function App () {
         </p>
       </Container>
       <Graph visualisation={HottestTopics} />
+
     </div>
   )
 }
