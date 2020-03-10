@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/fb-political-ads/static/css/main.038f65b0.chunk.css",
+    "main.js": "/fb-political-ads/static/js/main.35c696db.chunk.js",
+    "main.js.map": "/fb-political-ads/static/js/main.35c696db.chunk.js.map",
+    "runtime-main.js": "/fb-political-ads/static/js/runtime-main.d643e269.js",
+    "runtime-main.js.map": "/fb-political-ads/static/js/runtime-main.d643e269.js.map",
+    "static/css/2.56bbed46.chunk.css": "/fb-political-ads/static/css/2.56bbed46.chunk.css",
+    "static/js/2.c0d11578.chunk.js": "/fb-political-ads/static/js/2.c0d11578.chunk.js",
+    "static/js/2.c0d11578.chunk.js.map": "/fb-political-ads/static/js/2.c0d11578.chunk.js.map",
+    "index.html": "/fb-political-ads/index.html",
+    "precache-manifest.dbe4bb61555673cf60109acc055a73b7.js": "/fb-political-ads/precache-manifest.dbe4bb61555673cf60109acc055a73b7.js",
+    "service-worker.js": "/fb-political-ads/service-worker.js",
+    "static/css/2.56bbed46.chunk.css.map": "/fb-political-ads/static/css/2.56bbed46.chunk.css.map",
+    "static/css/main.038f65b0.chunk.css.map": "/fb-political-ads/static/css/main.038f65b0.chunk.css.map",
+    "static/js/2.c0d11578.chunk.js.LICENSE.txt": "/fb-political-ads/static/js/2.c0d11578.chunk.js.LICENSE.txt",
+    "static/media/index.css": "/fb-political-ads/static/media/element-icons.d2f69a92.woff"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.d643e269.js",
+    "static/css/2.56bbed46.chunk.css",
+    "static/js/2.c0d11578.chunk.js",
+    "static/css/main.038f65b0.chunk.css",
+    "static/js/main.35c696db.chunk.js"
+  ]
+}
