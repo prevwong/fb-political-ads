@@ -5,6 +5,7 @@ import { Graph } from './components/Graph'
 import { HottestTopics } from './visualisations/hottest-topics'
 import { Sentiment } from './visualisations/sentiment'
 import { Bubbles} from './visualisations/bubbles'
+import { Clustering } from './visualisations/clustering'
 
 function App () {
   return (
@@ -57,6 +58,20 @@ function App () {
         </p>
       </Container>
       <Graph visualisation={HottestTopics} />
+
+      <Container
+        preface="What are the"
+        title="Entities that occur together with each other?"
+      >
+        <p className='paragraph'>
+          To better understand what kind of advertisements are displayed, we used K-means clustering algorithm to 
+          cluster the ad entities, and therefore, those in the same cluster suggests that they occur frequently
+          in an ad. By doing so, we can see how advertisers tend to associate an entity with each other, eg. 
+          Trump with white house. (However, due to limitations of d3, we are only able to select a very small
+          portion of the data as proof-of-concept.)
+        </p>
+      </Container>
+      <Graph visualisation={Clustering} />
 
     </div>
   )
